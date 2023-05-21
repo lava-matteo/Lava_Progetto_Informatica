@@ -203,6 +203,45 @@ class Player(Entity):
             self.controller.jump_height = 3
             self.controller.jump_up_duration = .5
 
+class porta(Entity):
+    def __init__(self, name, model, scale, color, texture, collider, position, rotation, locked, **kwargs):        
+        super().__init__(**kwargs)
+        
+        self.name = name
+        self.model = model
+        self.color = color
+        self.scale = scale
+        self.collider = collider
+        self.position = position
+        self.rotation = rotation
+        self.texture = texture
+        self.locked = locked
+
+        self.door = Audio('audio/door.mp3', loop = False, autoplay = False, volume = 0.3)
+
+        self.visible = True
+
+        self.porta = Entity(name = self.name, model = self.model, color = self.color, texture = self.texture, scale = self.scale, collider = self.collider, position = self.position, rotation = self.rotation)
+    
+    def punched(self):
+        self.door.play()
+        self.porta.enabled = False
+        self.enabled = False
+
+    def punch(self):
+        hit_info = raycast(camera.world_position, camera.forward, distance=3)
+        if hit_info.hit and hit_info.entity.name == self.name:
+            self.punched()
+    def input(self, key):
+        if key == 'left mouse down' and not self.locked:
+            invoke(self.punch, delay = 0.3)
+
+    def update(self):
+        if self.locked or self.name != "portone":
+            self.porta.texture = self.texture
+        else:
+            self.porta.texture = "portone_aperto"
+
 app = Ursina()
 
 window.title = 'spatial ma più meglio assai'
@@ -217,6 +256,15 @@ tappo_sopra = Entity(model = 'cube', scale = Vec3(30, 0.1, 30), color = (0, 0, 0
 
 wireless = Entity(model = 'models_compressed/stanza wireless', scale = 20, texture = 'textures/wireless', collider = 'mesh', position = (-40, 0, 0), shader = lit_with_shadows_shader) 
 satellitare = Entity(model = 'models_compressed/stanza satellitare', scale = 6, texture = 'textures/mappa_satellite', collider = 'mesh', position = (0, 100, 0), shader = lit_with_shadows_shader) 
+
+
+
+porta_principale = porta(name = 'porta_principale', model = 'cube', scale = Vec3(3.4,8,0.5), color = (255, 255, 255, 255), texture = 'textures/porta', collider = 'box', position = (0.65, 4, -17.5), rotation = (0, 0, 0), locked = False)
+porta_principale_wireless = porta(name = 'porta_principale_wireless', model = 'cube', scale = Vec3(3.38,7.8,0.5), color = (255, 255, 255, 255), texture = 'textures/porta', collider = 'box', position = (-13.93, 4, -6.55), rotation = (0, -90, 0), locked = False)
+porta_principale_satellitare = porta(name = 'porta_principale_satellitare', model = 'cube', scale = Vec3(3.38,7.8,0.5), color = (255, 255, 255, 255), texture = 'textures/porta', collider = 'box', position = (15.1, 4, -6.6), rotation = (0, 90, 0), locked = False)
+porta_wireless_1 = porta(name = 'porta_wireless_1', model = 'cube', scale = Vec3(2.9,7,0.5), color = (255, 255, 255, 255), texture = 'textures/porta', collider = 'box', position = (-39.74, 3.5, -19.22), rotation = (0, -90, 0), locked = False)
+porta_wireless_2 = porta(name = 'porta_wireless_2', model = 'cube', scale = Vec3(2.9,7,0.5), color = (255, 255, 255, 255), texture = 'textures/porta', collider = 'box', position = (-44.25, 3.5, -4.76), rotation = (0, 0, 0), locked = False)
+portone = porta(name = 'portone', model = 'cube', scale = Vec3(10.4,15,1), color = (255, 255, 255, 255), texture = 'textures/portone_chiuso', collider = 'box', position = (0.74, 7.5, 1.54), rotation = (0, 0, 0), locked = True)
 
 
 
