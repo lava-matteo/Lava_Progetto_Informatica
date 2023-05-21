@@ -105,6 +105,7 @@ class Player(Entity):
         self.walk = Audio('audio\passi_lenti.mp3', loop = False, autoplay = False)
         self.fall = Audio('audio\caduta.mp3', loop = False, autoplay = False)
         self.punch = Audio('audio\pugno.mp3', loop = False, autoplay = False, volume = 0.4)
+        self.music = Audio('audio/musica.mp3', loop = True, autoplay = False)
 
         self.fists = Entity(parent = self.controller.camera_pivot)
         self.morelli = Entity(parent = self.controller.camera_pivot, scale = 0.15, position = Vec3(0.7, -0.3, 0.8), rotation= Vec3(0, -40, 30), model = 'models_compressed/bottiglia', texture = 'textures/morelli2', shader = transition_shader)
@@ -183,6 +184,8 @@ class Player(Entity):
             self.controller.rotation = (0, 0, 0)
         # print(self.controller.position)
         # print(self.controller.rotation)
+        # print(self.music.playing)
+        # print(self.controller.position.x < -40.4953 and self.controller.position.x > -48.7646 and self.controller.position.z > -24.4215 and self.controller.position.z < -5.40455 and self.music.playing == False)
         
         if self.controller.grounded and self.caduto:
             self.fall.play()
@@ -196,6 +199,12 @@ class Player(Entity):
         else:
             self.controller.enabled = True
             application.paused = False
+
+        if self.controller.position.x < -40.4953 and self.controller.position.x > -48.7646 and self.controller.position.z > -24.4215 and self.controller.position.z < -5.40455:
+            if self.music.playing == 0:
+                self.music.play()    
+        else:
+            self.music.stop()
 
         if self.controller.position.y > 98:
             self.controller.gravity = 0.4
