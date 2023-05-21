@@ -10,12 +10,10 @@ class Menu(Entity):
 
         self.ignore_paused = True
 
-        self.mappa_sistemi = Button(text = 'Comunicazione wireless e satellitare', color = (25, 25, 25), pressed_color = (255, 255, 255, 255), scale = (0.8, 0.1), position = (0, 0.15), parent = self)
-        self.mappa_tps = Button(text = 'Immagini e tabelle', color = (25, 25, 25), pressed_color = (255, 255, 255, 255), scale = (0.8, 0.1), position = (0, 0), parent = self)
-        self.esci = Button(text = 'Esci', color = (25, 25, 25), pressed_color = (255, 255, 255, 255), scale = (0.8, 0.1), position = (0, -0.15), parent = self)
+        self.mappa_sistemi = Button(text = 'Entra nel museo', color = (25, 25, 25), pressed_color = (255, 255, 255, 255), scale = (0.8, 0.1), position = (0, 0.10), parent = self)
+        self.esci = Button(text = 'Esci', color = (25, 25, 25), pressed_color = (255, 255, 255, 255), scale = (0.8, 0.1), position = (0, -0.10), parent = self)
 
         self.mappa_sistemi.on_click = self.sistemi_premuto
-        self.mappa_tps.on_click = self.tps_premuto
         self.esci.on_click = self.esci_premuto
 
         self.enabled = True
@@ -36,9 +34,6 @@ class Menu(Entity):
 
     def esci_premuto(self):
         exit()
-
-    def tps_premuto(self):
-        pass
         
 
 class Pausa(Entity):
