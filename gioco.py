@@ -127,6 +127,18 @@ class Player(Entity):
 
 app = Ursina()
 
+window.title = 'spatial ma più meglio assai'
+window.fullscreen = True
+window.exit_button.visible = False
+window.fps_counter.enabled = False
+
+mappa = Entity(model = 'models_compressed/mappa_definitiva1', scale = 20, texture = 'textures/texture_mappa', collider = 'mesh', position = (0, 0, 0), shader = lit_with_shadows_shader) 
+tappo_sopra = Entity(model = 'cube', scale = Vec3(30, 0.1, 30), color = (0, 0, 0, 255), collider = 'mesh', position = (0, 84.4487, -21), shader = lit_with_shadows_shader) 
+
+wireless = Entity(model = 'models_compressed/stanza wireless', scale = 20, texture = 'textures/wireless', collider = 'mesh', position = (-40, 0, 0), shader = lit_with_shadows_shader) 
+satellitare = Entity(model = 'models_compressed/stanza satellitare', scale = 6, texture = 'textures/mappa_satellite', collider = 'mesh', position = (0, 100, 0), shader = lit_with_shadows_shader) 
+
+
 
 player = Player(position = (0.6, 75, -28), rotation = (0, 0, 0))
 
