@@ -251,6 +251,46 @@ class pulsante_respawn(Entity):
         if key == 'left mouse down':
             invoke(self.punch, delay = 0.2)
 
+class pulsante_slide(Entity):
+    def __init__(self, name, model, scale, color, texture, collider, position, rotation, diapositiva, **kwargs):        
+        super().__init__(**kwargs)
+        
+        self.name = name
+        self.model = model
+        self.color = color
+        self.scale = scale
+        self.collider = collider
+        self.position = position
+        self.rotation = rotation
+        self.texture = texture
+        self.diapositiva = diapositiva
+
+        self.press = Audio('audio/Beep.mp3', loop = False, autoplay = False)
+
+        self.ignore_paused = True
+
+        self.visible = True
+
+        self.altare = Entity(name = self.name, model = self.model, color = self.color, texture = self.texture, scale = self.scale, collider = self.collider, position = self.position, rotation = self.rotation)
+
+        self.p = Button(icon = self.diapositiva)
+        self.p.on_click = self.chiusura_apertura
+        self.p.enabled = False
+        
+    def chiusura_apertura(self):
+        self.p.enabled = not self.p.enabled
+        application.paused = not application.paused     
+
+    def punch(self):
+        hit_info = raycast(camera.world_position, camera.forward, distance = 4)
+        if hit_info.hit and hit_info.entity.name == self.name:
+            if not self.press.playing:
+                self.press.play()
+            invoke(self.chiusura_apertura, delay = 0.1)
+
+    def input(self, key):
+        if key == 'left mouse down' and not application.paused:
+            invoke(self.punch, delay = 0.2)
 
 class porta(Entity):
     def __init__(self, name, model, scale, color, texture, collider, position, rotation, locked, **kwargs):        
