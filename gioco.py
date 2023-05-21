@@ -2,6 +2,8 @@ from ursina import *
 from ursina.prefabs.first_person_controller import *
 from ursina.shaders import lit_with_shadows_shader, transition_shader
 
+
+
 class Menu(Entity):
     def __init__(self, **kwargs):
         super().__init__(parent = camera.ui)
@@ -80,6 +82,7 @@ class Pausa(Entity):
         player.controller.rotation = (0, 0, 0)
         title_screen.enabled = True
         
+
 class Player(Entity):
     def __init__(self, position, rotation, **kwargs):
         self.controller = FirstPersonController(**kwargs)
@@ -203,6 +206,7 @@ class Player(Entity):
             self.controller.jump_height = 3
             self.controller.jump_up_duration = .5
 
+
 class pulsante_respawn(Entity):
     def __init__(self, name, model, scale, color, texture, collider, position, rotation, pposition, protation, fine, unlock, **kwargs):        
         super().__init__(**kwargs)
@@ -251,6 +255,7 @@ class pulsante_respawn(Entity):
         if key == 'left mouse down':
             invoke(self.punch, delay = 0.2)
 
+
 class pulsante_slide(Entity):
     def __init__(self, name, model, scale, color, texture, collider, position, rotation, diapositiva, **kwargs):        
         super().__init__(**kwargs)
@@ -291,6 +296,7 @@ class pulsante_slide(Entity):
     def input(self, key):
         if key == 'left mouse down' and not application.paused:
             invoke(self.punch, delay = 0.2)
+
 
 class porta(Entity):
     def __init__(self, name, model, scale, color, texture, collider, position, rotation, locked, **kwargs):        
@@ -340,6 +346,8 @@ window.fps_counter.enabled = False
 
 title_screen = Menu(parent = camera.ui)
 
+pause = Pausa(parent = camera.ui)
+
 mappa = Entity(model = 'models_compressed/mappa_definitiva1', scale = 20, texture = 'textures/texture_mappa', collider = 'mesh', position = (0, 0, 0), shader = lit_with_shadows_shader) 
 tappo_sopra = Entity(model = 'cube', scale = Vec3(30, 0.1, 30), color = (0, 0, 0, 255), collider = 'mesh', position = (0, 84.4487, -21), shader = lit_with_shadows_shader) 
 
@@ -354,6 +362,17 @@ principale_satellitare = pulsante_respawn(unlock = False, name = 'principale_sat
 satellitare_principale = pulsante_respawn(unlock = True, name = 'satellitare_principale', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_teletrasporto', collider = 'mesh', position = (3.09, 101.417, -31.108), rotation = (0, 263.62, 0), pposition = (0.6, 0.1, -12), protation = (0, 0, 0), fine = False)
 pulsante_fine = pulsante_respawn(unlock = False, name = 'pulsante_fine', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_teletrasporto', collider = 'mesh', position = (0.65, 0, 16.79), rotation = (0, 90, 0), pposition = (0.6, 75, -28), protation = (0, 0, 0), fine = True)
 
+slide_principale = pulsante_slide(name = 'slide_principale', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_slide', collider = 'mesh', position = (0.6, 0, -6.5), rotation = (0, 90, 0), diapositiva = '\slides\slide_1')
+slide_wireless_0 = pulsante_slide(name = 'slide_wireless_0', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_slide', collider = 'mesh', position = (-32.5, 0, -15.35), rotation = (0, 180, 0), diapositiva = '\slides\slide_1')
+slide_wireless_1 = pulsante_slide(name = 'slide_wireless_1', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_slide', collider = 'mesh', position = (-34.95, 0, -23.3), rotation = (0, -90, 0), diapositiva = '\slides\slide_2')
+slide_wireless_2 = pulsante_slide(name = 'slide_wireless_2', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_slide', collider = 'mesh', position = (-48, 0, -15), rotation = (0, 0, 0), diapositiva = '\slides\slide_3')
+slide_wireless_3 = pulsante_slide(name = 'slide_wireless_3', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_slide', collider = 'mesh', position = (-39.635, 0.48474, 7.109), rotation = (0, -90, 0), diapositiva = '\slides\slide_4')
+slide_wireless_4 = pulsante_slide(name = 'slide_wireless_4', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_slide', collider = 'mesh', position = (-48, 0, 4), rotation = (0, 0, 0), diapositiva = '\slides\slide_5')
+slide_wireless_5 = pulsante_slide(name = 'slide_wireless_5', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_slide', collider = 'mesh', position = (-32.1, 0, 4), rotation = (0, 180, 0), diapositiva = '\slides\slide_6')
+slide_satellitare_0 = pulsante_slide(name = 'slide_satellitare_0', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_slide', collider = 'mesh', position = (1.23166, 101.417, -12), rotation = (0, 83.62, 0), diapositiva = '\slides\slide_1')
+slide_satellitare_1 = pulsante_slide(name = 'slide_satellitare_1', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_slide', collider = 'mesh', position = (-0.5, 101.417, 12), rotation = (0, 263.62, 0), diapositiva = '\slides\slide_1')
+slide_satellitare_2 = pulsante_slide(name = 'slide_satellitare_2', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_slide', collider = 'mesh', position = (-12, 101.417, -1.337), rotation = (0, 173.62, 0), diapositiva = '\slides\slide_1')
+slide_satellitare_3 = pulsante_slide(name = 'slide_satellitare_3', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_slide', collider = 'mesh', position = (12, 101.417, 1.01), rotation = (0, 353.62, 0), diapositiva = '\slides\slide_1')
 
 porta_principale = porta(name = 'porta_principale', model = 'cube', scale = Vec3(3.4,8,0.5), color = (255, 255, 255, 255), texture = 'textures/porta', collider = 'box', position = (0.65, 4, -17.5), rotation = (0, 0, 0), locked = False)
 porta_principale_wireless = porta(name = 'porta_principale_wireless', model = 'cube', scale = Vec3(3.38,7.8,0.5), color = (255, 255, 255, 255), texture = 'textures/porta', collider = 'box', position = (-13.93, 4, -6.55), rotation = (0, -90, 0), locked = False)
