@@ -2,6 +2,84 @@ from ursina import *
 from ursina.prefabs.first_person_controller import *
 from ursina.shaders import lit_with_shadows_shader, transition_shader
 
+class Menu(Entity):
+    def __init__(self, **kwargs):
+        super().__init__(parent = camera.ui)
+
+        self.ignore_paused = True
+
+        self.mappa_sistemi = Button(text = 'Comunicazione wireless e satellitare', color = (25, 25, 25), pressed_color = (255, 255, 255, 255), scale = (0.8, 0.1), position = (0, 0.15), parent = self)
+        self.mappa_tps = Button(text = 'Immagini e tabelle', color = (25, 25, 25), pressed_color = (255, 255, 255, 255), scale = (0.8, 0.1), position = (0, 0), parent = self)
+        self.esci = Button(text = 'Esci', color = (25, 25, 25), pressed_color = (255, 255, 255, 255), scale = (0.8, 0.1), position = (0, -0.15), parent = self)
+
+        self.mappa_sistemi.on_click = self.sistemi_premuto
+        self.mappa_tps.on_click = self.tps_premuto
+        self.esci.on_click = self.esci_premuto
+
+        self.enabled = True
+
+    def sistemi_premuto(self):
+        self.enabled = False
+        
+        porte = [porta_principale, porta_principale_wireless, porta_principale_satellitare, porta_wireless_1, porta_wireless_2, portone]
+        for i in porte:
+            i.enabled = True
+            i.porta.enabled = True
+        
+        satellitare_principale.clicked = False
+        wireless_principale.clicked = False
+        portone.locked = True
+
+        application.paused = False
+
+    def esci_premuto(self):
+        exit()
+
+    def tps_premuto(self):
+        pass
+        
+
+class Pausa(Entity):
+    def __init__(self, **kwargs):
+        super().__init__(parent = camera.ui)
+
+        self.ignore_paused = True
+        self.enabled = False
+
+        self.continua = Button(text = 'Continua', color = (25, 25, 25), pressed_color = (255, 255, 255, 255), scale = (0.4, 0.1), position = (0, 0.15), parent = self)
+        self.riavvia = Button(text = 'Riavvia', color = (25, 25, 25), pressed_color = (255, 255, 255, 255), scale = (0.4, 0.1), position = (0, 0), parent = self)
+        self.torna_al_menu = Button(text = 'Torna al menu', color = (25, 25, 25), pressed_color = (255, 255, 255, 255), scale = (0.4, 0.1), position = (0, -0.15), parent = self)
+
+        self.continua.on_click = self.resume
+        self.riavvia.on_click = self.restart
+        self.torna_al_menu.on_click = self.main_menu
+
+    def resume(self):
+        self.enabled = False
+        application.paused = False
+
+    def restart(self):
+        self.enabled = False
+        player.controller.position = (0.6, 75, -28)
+        player.controller.rotation = (0, 0, 0)
+
+        satellitare_principale.clicked = False
+        wireless_principale.clicked = False
+        portone.locked = True
+        
+        porte = [porta_principale, porta_principale_wireless, porta_principale_satellitare, porta_wireless_1, porta_wireless_2, portone]
+        for i in porte:
+            i.enabled = True
+            i.porta.enabled = True
+        
+        application.paused = False
+
+    def main_menu(self):
+        self.enabled = False
+        player.controller.position = (0.6, 75, -28)
+        player.controller.rotation = (0, 0, 0)
+        title_screen.enabled = True
+        
 class Player(Entity):
     def __init__(self, position, rotation, **kwargs):
         self.controller = FirstPersonController(**kwargs)
@@ -131,6 +209,8 @@ window.title = 'spatial ma più meglio assai'
 window.fullscreen = True
 window.exit_button.visible = False
 window.fps_counter.enabled = False
+
+title_screen = Menu(parent = camera.ui)
 
 mappa = Entity(model = 'models_compressed/mappa_definitiva1', scale = 20, texture = 'textures/texture_mappa', collider = 'mesh', position = (0, 0, 0), shader = lit_with_shadows_shader) 
 tappo_sopra = Entity(model = 'cube', scale = Vec3(30, 0.1, 30), color = (0, 0, 0, 255), collider = 'mesh', position = (0, 84.4487, -21), shader = lit_with_shadows_shader) 
