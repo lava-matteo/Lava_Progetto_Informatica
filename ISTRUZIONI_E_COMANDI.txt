@@ -1,0 +1,27 @@
+ISTRUZIONI
+
+Per eseguire il programma sono necessari:
+-Python;
+-Ursina;
+-Imageio
+
+1- installare python dal sito
+2- installare ursina da cmd con il comando: 'pip install ursina'
+3- installare imageio da cmd con il comando: 'pip install imageio'
+
+Se all'avvio del programma la finestra si chiude immediatamente basta aprire il file con Visual Studio Code o con IDLE ed eseguirlo da lì
+
+COMANDI
+
+muovi la visuale -- PUNTATORE MOUSE
+cammina in avanti -- W
+cammina indietro -- S
+cammina a destra -- D
+cammina a  sinistra -- A
+corri -- SHIFT
+salta -- SPAZIO
+abbassati -- CTRL / C
+tira un cazzotto/apri/chiudi slide -- TASTO SINISTRO DEL MOUSE
+menu di pausa -- ESC
+riavvia -- r
+cambia oggetto (inutile) -- 1/2
