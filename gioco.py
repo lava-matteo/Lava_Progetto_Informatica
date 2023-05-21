@@ -364,6 +364,7 @@ wireless = Entity(model = 'models_compressed/stanza wireless', scale = 20, textu
 satellitare = Entity(model = 'models_compressed/stanza satellitare', scale = 6, texture = 'textures/mappa_satellite', collider = 'mesh', position = (0, 100, 0), shader = lit_with_shadows_shader) 
 
 satellite = Entity(model = 'models_compressed/satellite', scale = 2, texture = 'textures/satellite_texture', collider = 'mesh', position = (0, 106, 0), rotation = (7, 80, 10), shader = lit_with_shadows_shader) 
+insegna = Entity(model = 'cube', scale = (6.25, 2.4 ,0.1), texture = 'insegna', collider = 'mesh', position = (0.68, 9.2, -19.5), rotation = (-23.3, 0, 0), shader = lit_with_shadows_shader)
 
 principale_wireless = pulsante_respawn(unlock = False, name = 'principale_wireless', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_teletrasporto', collider = 'mesh', position = (-19.1, 0, -6.57), rotation = (0, 0, 0), pposition = (-37, 0.1, -10), protation = (0, 180, 0), fine = False)
 wireless_principale = pulsante_respawn(unlock = True, name = 'wireless_principale',model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_teletrasporto', collider = 'mesh', position = (-35.25, 0, -6.2), rotation = (0, -90, 0), pposition = (0.6, 0.1, -12), protation = (0, 0, 0), fine = False)
