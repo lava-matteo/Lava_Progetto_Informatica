@@ -203,6 +203,55 @@ class Player(Entity):
             self.controller.jump_height = 3
             self.controller.jump_up_duration = .5
 
+class pulsante_respawn(Entity):
+    def __init__(self, name, model, scale, color, texture, collider, position, rotation, pposition, protation, fine, unlock, **kwargs):        
+        super().__init__(**kwargs)
+        
+        self.name = name
+        self.model = model
+        self.color = color
+        self.scale = scale
+        self.collider = collider
+        self.position = position
+        self.rotation = rotation
+        self.texture = texture
+        self.pposition = pposition
+        self.protation = protation
+        self.fine = fine
+        self.unlock = unlock
+
+        self.press = Audio('audio/Beep.mp3', loop = False, autoplay = False)
+
+        self.clicked = False
+
+        self.visible = True
+        self.ignore_paused = True
+        self.altare = Entity(name = self.name, model = self.model, color = self.color, texture = self.texture, scale = self.scale, collider = self.collider, position = self.position, rotation = self.rotation)
+
+    def respawn(self):
+        if not self.press.playing:
+            self.press.play()
+        player.controller.position = self.pposition
+        player.controller.rotation = self.protation
+        if self.fine:
+            title_screen.enabled = True
+        if self.unlock == True:
+            self.clicked = True
+            if wireless_principale.clicked == True and satellitare_principale.clicked == True:
+                portone.locked = False
+    
+    def punch(self):
+        hit_info = raycast(camera.world_position, camera.forward, distance = 4)
+        if hit_info.hit and hit_info.entity.name == self.name:
+            if not self.press.playing:
+                self.press.play()
+            invoke(self.respawn, delay = 0.1)
+
+    def input(self, key):
+        if key == 'left mouse down':
+            invoke(self.punch, delay = 0.2)
+
+
 class porta(Entity):
     def __init__(self, name, model, scale, color, texture, collider, position, rotation, locked, **kwargs):        
         super().__init__(**kwargs)
@@ -257,6 +306,13 @@ tappo_sopra = Entity(model = 'cube', scale = Vec3(30, 0.1, 30), color = (0, 0, 0
 wireless = Entity(model = 'models_compressed/stanza wireless', scale = 20, texture = 'textures/wireless', collider = 'mesh', position = (-40, 0, 0), shader = lit_with_shadows_shader) 
 satellitare = Entity(model = 'models_compressed/stanza satellitare', scale = 6, texture = 'textures/mappa_satellite', collider = 'mesh', position = (0, 100, 0), shader = lit_with_shadows_shader) 
 
+satellite = Entity(model = 'models_compressed/satellite', scale = 2, texture = 'textures/satellite_texture', collider = 'mesh', position = (0, 106, 0), rotation = (7, 80, 10), shader = lit_with_shadows_shader) 
+
+principale_wireless = pulsante_respawn(unlock = False, name = 'principale_wireless', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_teletrasporto', collider = 'mesh', position = (-19.1, 0, -6.57), rotation = (0, 0, 0), pposition = (-37, 0.1, -10), protation = (0, 180, 0), fine = False)
+wireless_principale = pulsante_respawn(unlock = True, name = 'wireless_principale',model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_teletrasporto', collider = 'mesh', position = (-35.25, 0, -6.2), rotation = (0, -90, 0), pposition = (0.6, 0.1, -12), protation = (0, 0, 0), fine = False)
+principale_satellitare = pulsante_respawn(unlock = False, name = 'principale_satellitare', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_teletrasporto', collider = 'mesh', position = (20.5, 0, -6.57), rotation = (0, 180, 0), pposition = (2, 101.6, -20), protation = (0, -7.38, 0), fine = False)
+satellitare_principale = pulsante_respawn(unlock = True, name = 'satellitare_principale', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_teletrasporto', collider = 'mesh', position = (3.09, 101.417, -31.108), rotation = (0, 263.62, 0), pposition = (0.6, 0.1, -12), protation = (0, 0, 0), fine = False)
+pulsante_fine = pulsante_respawn(unlock = False, name = 'pulsante_fine', model = 'models_compressed/altare', scale = 1.1, color = (255, 255, 255, 255), texture = 'textures/altare_teletrasporto', collider = 'mesh', position = (0.65, 0, 16.79), rotation = (0, 90, 0), pposition = (0.6, 75, -28), protation = (0, 0, 0), fine = True)
 
 
 porta_principale = porta(name = 'porta_principale', model = 'cube', scale = Vec3(3.4,8,0.5), color = (255, 255, 255, 255), texture = 'textures/porta', collider = 'box', position = (0.65, 4, -17.5), rotation = (0, 0, 0), locked = False)
